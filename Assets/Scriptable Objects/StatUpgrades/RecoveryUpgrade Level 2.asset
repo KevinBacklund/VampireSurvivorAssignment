@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1a48a3e2f3123a40b5e208ef6c25acf, type: 3}
+  m_Name: RecoveryUpgrade Level 2
+  m_EditorClassIdentifier: Assembly-CSharp::StatUpgradeScriptableObject
+  multiplier: 15
+  level: 2
+  nextLevelPrefab: {fileID: 0}
+  name: Recover Level 2
+  description: Increases Recovery
+  icon: {fileID: 8322638651782862973, guid: a31aebfeb377fe84a8971a615ec37bdc, type: 3}
