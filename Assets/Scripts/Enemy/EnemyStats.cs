@@ -32,6 +32,7 @@ public class EnemyStats : MonoBehaviour
     {
         PlayerStats player = FindAnyObjectByType<PlayerStats>();
         currentHealth -= dmg * player.CurrentDmgMultiplier;
+        SoundManager.PlaySfx(SfxType.enemyDamaged, 0.5f);
         if(knockbackForce > 0)
         {
             Vector2 direction = (Vector2)transform.position - sourcePosittion;
@@ -49,6 +50,7 @@ public class EnemyStats : MonoBehaviour
         enemySpawner.OnEnemyKilled();
         player.IncreaseExperience(xpDrop);
         GameManager.currentScore++;
+        SoundManager.PlaySfx(SfxType.enemyDeath);
         Destroy(gameObject);
     }
 

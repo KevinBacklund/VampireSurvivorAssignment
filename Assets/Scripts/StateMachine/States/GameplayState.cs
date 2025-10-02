@@ -5,7 +5,7 @@ public class GameplayState : State
     public override void EnterState()
     {
         base.EnterState();
-
+        SoundManager.PlayBgm(Bgm.gameplay);
         GameManager.gamePaused = false;
     }
 

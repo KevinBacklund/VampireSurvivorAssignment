@@ -15,6 +15,7 @@ public class GameManager : StateMachine
     public GameObject pauseScreen;
     public GameObject gameOverScreen;
     public GameObject levelUpScreen;
+    public GameObject settingsScreen;
     public TMP_Text currentHealthDisplay;
     public TMP_Text currentRecoveryDisplay;
     public TMP_Text currentMoveSpeedDisplay;
@@ -24,8 +25,16 @@ public class GameManager : StateMachine
 
     private void Awake()
     {
-        Instance = this;
-        DisableScreens();
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+            DisableScreens();
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
     private void Start()
@@ -44,11 +53,22 @@ public class GameManager : StateMachine
         pauseScreen.SetActive(false);
         gameOverScreen.SetActive(false);
         levelUpScreen.SetActive(false);
+        settingsScreen.SetActive(false);
     }
 
     public void ResumeGame()
     {
         SwitchState<GameplayState>();
+    }
+
+    public void PauseMenu()
+    {
+        SwitchState<PausedState>();
+    }
+
+    public void Settings()
+    {
+        SwitchState<SettingsState>();
     }
 
     public void GameOver()

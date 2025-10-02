@@ -1,7 +1,7 @@
 using UnityEngine;
 
 
-public enum SoundType
+public enum SfxType
 {
     enemyDamaged,
     levelUp,
@@ -13,29 +13,42 @@ public enum SoundType
     playerDamaged,
 }
 
+public enum Bgm
+{
+    gameplay,
+    mainMenu,
+}
 
-[RequireComponent(typeof(AudioSource))]
 public class SoundManager : MonoBehaviour
 {
     [SerializeField]
-    private AudioClip[] soundlist;
+    private AudioClip[] sfxList, bgmList;
 
     private static SoundManager instance;
-    private AudioSource audioSource;
+    private AudioSource[] audioSources;
+    private AudioSource sfxSource, bgmSource;
 
     private void Awake()
     {
-        instance = this;
+            instance = this;
+            audioSources = GetComponents<AudioSource>();
+            sfxSource = audioSources[0];
+            bgmSource = audioSources[1];
     }
 
-    private void Start()
+    public static void PlaySfx(SfxType sound, float volume = 1)
     {
-        audioSource = GetComponent<AudioSource>();
+        instance.sfxSource.PlayOneShot(instance.sfxList[(int)sound], volume);
     }
 
-    public static void Playsound(SoundType sound, float volume = 1)
+    public static void PlayBgm (Bgm music, float volume = 1)
     {
-        instance.audioSource.PlayOneShot(instance.soundlist[(int)sound], volume);
+        if (instance.bgmSource.clip != instance.bgmList[(int)music]) 
+        {
+            instance.bgmSource.clip = instance.bgmList[(int)music];
+            instance.bgmSource.volume = volume;
+            instance.bgmSource.loop = true;
+            instance.bgmSource.Play();
+        }
     }
-
 }

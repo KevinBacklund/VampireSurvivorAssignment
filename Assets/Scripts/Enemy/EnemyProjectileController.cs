@@ -27,5 +27,6 @@ public class EnemyProjectileController : MonoBehaviour
     protected virtual void Attack()
     {
         currentCooldown = cooldownDuration;
+        SoundManager.PlaySfx(SfxType.enemyAttack);
     }
 }

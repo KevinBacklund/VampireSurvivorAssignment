@@ -9,6 +9,7 @@ public class MainMenu : MonoBehaviour
     {
         saveManager.LoadData();
         highScoreText.text = "Highscore  - " + saveManager.GetHighscore.ToString();
+        SoundManager.PlayBgm(Bgm.mainMenu);
     }
 
     public void ExitGame()

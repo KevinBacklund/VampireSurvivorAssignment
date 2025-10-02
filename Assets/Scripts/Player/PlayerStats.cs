@@ -137,6 +137,7 @@ public class PlayerStats : MonoBehaviour
 
     public void IncreaseExperience(int amount)
     {
+        SoundManager.PlaySfx(SfxType.expGain);
         experience += amount;
 
         LevelUpChecker();
@@ -162,7 +163,7 @@ public class PlayerStats : MonoBehaviour
                 }
             }
             experienceCap += experienceCapIncrease;
-            SoundManager.Playsound(SoundType.levelUp);
+            SoundManager.PlaySfx(SfxType.levelUp);
 
             GameManager.Instance.SwitchState<LevelUpState>();
                 
@@ -174,6 +175,7 @@ public class PlayerStats : MonoBehaviour
         if (!isInvincible)
         {
             CurrentHealth -= dmg;
+            SoundManager.PlaySfx(SfxType.playerDamaged);
         }
 
         if (CurrentHealth <= 0)
@@ -186,6 +188,7 @@ public class PlayerStats : MonoBehaviour
 
     void Kill()
     {
+        SoundManager.PlaySfx(SfxType.playerDeath);
         if (!GameManager.Instance.isGameover)
         {
             GameManager.Instance.GameOver();
