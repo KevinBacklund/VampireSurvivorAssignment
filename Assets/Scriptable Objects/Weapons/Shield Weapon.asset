@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c7608a7397327d441983aabefca56c17, type: 3}
+  m_Name: Shield Weapon
+  m_EditorClassIdentifier: Assembly-CSharp::WeaponScriptableObject
+  prefab: {fileID: 4105357187276859732, guid: 1a8af7157fcfc794c989f45cd6203f4d, type: 3}
+  damage: 3
+  speed: 100
+  cooldownDuration: 3
+  pierce: -1
+  knockbackForce: 5
+  rotationOffset: 0
+  level: 1
+  nextLevelPrefab: {fileID: 0}
+  name: Shield
+  description: Rotating Shields
+  icon: {fileID: 505969394831015112, guid: d534b63301496964eae4f46a08ec70e9, type: 3}
