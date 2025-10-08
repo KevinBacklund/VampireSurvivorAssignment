@@ -19,6 +19,7 @@ public enum Bgm
     mainMenu,
 }
 
+
 public class SoundManager : MonoBehaviour
 {
     [SerializeField]
@@ -28,6 +29,9 @@ public class SoundManager : MonoBehaviour
     private AudioSource[] audioSources;
     private AudioSource sfxSource, bgmSource;
 
+    private static float volume = 1f;
+    private static float bgmVolume = 0.5f;
+
     private void Awake()
     {
             instance = this;
@@ -36,17 +40,25 @@ public class SoundManager : MonoBehaviour
             bgmSource = audioSources[1];
     }
 
-    public static void PlaySfx(SfxType sound, float volume = 1)
+    public static void PlaySfx(SfxType sound, float volumeMult = 1)
     {
-        instance.sfxSource.PlayOneShot(instance.sfxList[(int)sound], volume);
+        instance.sfxSource.PlayOneShot(instance.sfxList[(int)sound], volume*volumeMult);
     }
 
-    public static void PlayBgm (Bgm music, float volume = 1)
+    public void Changevolume(float vol)
     {
+        
+        volume = vol;
+        instance.bgmSource.volume = volume*bgmVolume;
+    }
+
+    public static void PlayBgm (Bgm music, float volumeMult = 1)
+    {
+        bgmVolume = volumeMult;
         if (instance.bgmSource.clip != instance.bgmList[(int)music]) 
         {
             instance.bgmSource.clip = instance.bgmList[(int)music];
-            instance.bgmSource.volume = volume;
+            instance.bgmSource.volume = volume*bgmVolume;
             instance.bgmSource.loop = true;
             instance.bgmSource.Play();
         }

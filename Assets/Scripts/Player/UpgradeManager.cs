@@ -77,23 +77,6 @@ public class UpgradeManager : MonoBehaviour
         } 
     }
 
-    /*public void LevelUpStatUpgrade(int slotIndex, int upgradeIndex)
-    {
-        if (statUpgradeSlots.Count > slotIndex)
-        {
-            StatUpgrade statUpgrade = statUpgradeSlots[slotIndex];
-            GameObject upgradedStat = Instantiate(statUpgrade.statUpgradeData.NextLevelPrefab, transform.position, Quaternion.identity);
-            upgradedStat.transform.SetParent(transform);
-            AddStatUpgrade(slotIndex, upgradedStat.GetComponent<StatUpgrade>());
-            Destroy(statUpgrade.gameObject);
-            weaponLevels[slotIndex] = upgradedStat.GetComponent<StatUpgrade>().statUpgradeData.Level;
-
-            statUpgradeOptions[upgradeIndex].statUpgradeData = upgradedStat.GetComponent <StatUpgrade>().statUpgradeData;
-
-            GameManager.choosingUpgrade = false;
-        }
-    }*/
-
     void ApplyUpgradeOptions()
     {
         List<WeaponUpgrade> availableWeaponUpgrades = new List<WeaponUpgrade>(weaponUpgradeOptions);
@@ -140,6 +123,7 @@ public class UpgradeManager : MonoBehaviour
                             {
                                 if (!chosenWeaponUpgrade.weaponData.NextLevelPrefab)
                                 {
+                                    upgradeType = 1;
                                     break;
                                 }
 
@@ -147,6 +131,7 @@ public class UpgradeManager : MonoBehaviour
                                 upgradeOption.upgradeButton.onClick.AddListener(() => LevelUpWeapon(i, chosenWeaponUpgrade.weaponUpgradeIndex));
                                 upgradeOption.upgradeDescriptionDisplay.text = chosenWeaponUpgrade.weaponData.NextLevelPrefab.GetComponent<WeaponController>().weaponData.Description;
                                 upgradeOption.upgradeNameDisplay.text = chosenWeaponUpgrade.weaponData.NextLevelPrefab.GetComponent<WeaponController>().weaponData.Name;
+                                upgradeOption.upgradeIcon.sprite = chosenWeaponUpgrade.weaponData.Icon;
                             }
                             break;
                         }
@@ -160,12 +145,14 @@ public class UpgradeManager : MonoBehaviour
                         upgradeOption.upgradeButton.onClick.AddListener(() => player.SpawnWeapon(chosenWeaponUpgrade.initialWeapon));
                         upgradeOption.upgradeDescriptionDisplay.text = chosenWeaponUpgrade.weaponData.Description;
                         upgradeOption.upgradeNameDisplay.text = chosenWeaponUpgrade.weaponData.Name;
+                        upgradeOption.upgradeIcon.sprite = chosenWeaponUpgrade.weaponData.Icon;
                     }
 
-                    upgradeOption.upgradeIcon.sprite = chosenWeaponUpgrade.weaponData.Icon;
+                    
                 }
             }
-            else if (upgradeType == 1)
+
+            if (upgradeType == 1)
             {
                 StatUp chosenStatUpgrade = availableStatUpgrade[Random.Range(0, availableStatUpgrade.Count)];
 
@@ -177,40 +164,6 @@ public class UpgradeManager : MonoBehaviour
                     upgradeOption.upgradeDescriptionDisplay.text = chosenStatUpgrade.statUpgradeData.Description;
                     upgradeOption.upgradeNameDisplay.text = chosenStatUpgrade.statUpgradeData.Name;
                     upgradeOption.upgradeIcon.sprite = chosenStatUpgrade.statUpgradeData.Icon;
-
-                    /*bool newStatUpgrade = false;
-                    for (int i = 0; i < statUpgradeSlots.Count; i++)
-                    {
-                        if (statUpgradeSlots[i] != null && statUpgradeSlots[i].statUpgradeData == chosenStatUpgrade.statUpgradeData)
-                        {
-                            newStatUpgrade = false;
-
-                            if (!newStatUpgrade)
-                            {
-                                if (!chosenStatUpgrade.statUpgradeData.NextLevelPrefab)
-                                {
-                                    break;
-                                }
-
-                                upgradeOption.upgradeButton.onClick.AddListener(() => LevelUpStatUpgrade(i, chosenStatUpgrade.StatUpIndex));
-                                upgradeOption.upgradeDescriptionDisplay.text = chosenStatUpgrade.statUpgradeData.NextLevelPrefab.GetComponent<StatUpgrade>().statUpgradeData.Description;
-                                upgradeOption.upgradeNameDisplay.text = chosenStatUpgrade.statUpgradeData.NextLevelPrefab.GetComponent<StatUpgrade>().statUpgradeData.Name;
-                            }
-                            break;
-                        }
-                        else
-                        {
-                            newStatUpgrade = true;
-                        }
-                    }
-
-                    if (newStatUpgrade)
-                    {
-                        upgradeOption.upgradeButton.onClick.AddListener(() => player.SpawnStatUpgrade(chosenStatUpgrade.initialStatUpgrade));
-                        upgradeOption.upgradeDescriptionDisplay.text = chosenStatUpgrade.statUpgradeData.Description;
-                        upgradeOption.upgradeNameDisplay.text = chosenStatUpgrade.statUpgradeData.Name;
-                    }
-                    upgradeOption.upgradeIcon.sprite = chosenStatUpgrade.statUpgradeData.Icon;*/
                 }
             }
         }

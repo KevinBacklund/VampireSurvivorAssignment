@@ -24,6 +24,5 @@ public class PausedState : State
     {
         base.ExitState();
         GameManager.Instance.pauseScreen.SetActive(false);
-        GameManager.gamePaused = false;
     }
 }

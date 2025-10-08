@@ -250,22 +250,6 @@ public class PlayerStats : MonoBehaviour
         GameManager.choosingUpgrade = false;
     }
 
-    /*public void SpawnStatUpgrade(GameObject statUpgrade)
-    {
-        if (statUpgradeIndex >= upgradeManager.statUpgradeSlots.Count - 1)
-        {
-            Debug.LogError("statUpgrade slots full");
-            return;
-        }
-
-        GameObject spawnedStatUpgrade = Instantiate(statUpgrade, transform.position, Quaternion.identity);
-        spawnedStatUpgrade.transform.SetParent(transform);
-        upgradeManager.AddStatUpgrade(statUpgradeIndex, spawnedStatUpgrade.GetComponent<StatUpgrade>());
-
-        statUpgradeIndex++;
-        GameManager.choosingUpgrade = false;
-    }*/
-
     public void StatUpgrade(string statToUpgrade, float multiplier)      
     {
         multiplier = 1 + 0.01f * multiplier;
