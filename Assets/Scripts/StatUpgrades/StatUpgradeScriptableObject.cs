@@ -12,10 +12,6 @@ public class StatUpgradeScriptableObject : ScriptableObject
     public int Level { get => level; private set => level = value; }
 
     [SerializeField]
-    GameObject nextLevelPrefab;
-    public GameObject NextLevelPrefab { get => nextLevelPrefab; private set => nextLevelPrefab = value; }
-
-    [SerializeField]
     new string name;
     public string Name { get => name; private set => name = value; }
 

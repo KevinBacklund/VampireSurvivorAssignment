@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d1a48a3e2f3123a40b5e208ef6c25acf, type: 3}
-  m_Name: RecoveryUpgrade
+  m_Name: DmgMultiplier
   m_EditorClassIdentifier: Assembly-CSharp::StatUpgradeScriptableObject
-  multiplier: 10
+  multiplier: 20
   level: 1
-  name: Recovery
-  description: Increases Recovery
-  icon: {fileID: 8322638651782862973, guid: a31aebfeb377fe84a8971a615ec37bdc, type: 3}
+  name: DmgMultiplier
+  description: 20% more Dmg
+  icon: {fileID: -1324318189544361227, guid: d534b63301496964eae4f46a08ec70e9, type: 3}

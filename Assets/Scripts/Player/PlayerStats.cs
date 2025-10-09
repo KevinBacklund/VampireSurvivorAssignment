@@ -15,6 +15,8 @@ public class PlayerStats : MonoBehaviour
     float currentMoveSpeed;
     [HideInInspector]
     float currentDmgMultiplier;
+    [HideInInspector]
+    float currentMaxHealth;
 
     public List<GameObject> spawnedWeapons;
 
@@ -26,6 +28,19 @@ public class PlayerStats : MonoBehaviour
     [Header("Debug")]
     public bool isInvincible;
 
+    public float CurrentMaxHealth
+    {
+        get { return currentMaxHealth; }
+        set
+        {
+            if (characterData.MaxHealth != value)
+            {
+                currentMaxHealth = value;
+                GameManager.Instance.currentHealthDisplay.text = "Health: " + (int)currentHealth + "/" + currentMaxHealth;
+            }
+        }
+    }
+
     public float CurrentHealth
     {
         get {  return currentHealth; }
@@ -34,7 +49,7 @@ public class PlayerStats : MonoBehaviour
             if (currentHealth != value)
             {
                 currentHealth = value;
-                GameManager.Instance.currentHealthDisplay.text = "Health: " + (int)currentHealth + "/" + characterData.MaxHealth;
+                GameManager.Instance.currentHealthDisplay.text = "Health: " + (int)currentHealth + "/" + currentMaxHealth;
             }
         }
     }
@@ -103,6 +118,7 @@ public class PlayerStats : MonoBehaviour
     {
         upgradeManager = GetComponent<UpgradeManager>();
 
+        currentMaxHealth = characterData.MaxHealth;
         currentHealth = characterData.MaxHealth;
         currentDmgMultiplier = characterData.DmgMultiplier;
         currentMoveSpeed = characterData.MoveSpeed;
@@ -116,7 +132,7 @@ public class PlayerStats : MonoBehaviour
     private void Start()
     {
         experienceCap = levelRanges[0].experienceCapIncrease;
-        GameManager.Instance.currentHealthDisplay.text = "Health: " + +(int)currentHealth + "/" + characterData.MaxHealth;
+        GameManager.Instance.currentHealthDisplay.text = "Health: " + +(int)currentHealth + "/" + currentMaxHealth;
         GameManager.Instance.currentRecoveryDisplay.text = "Recovery: x" + currentRecovery;
         GameManager.Instance.currentMoveSpeedDisplay.text = "Move Speed: x" + currentMoveSpeed;
         GameManager.Instance.currentDmgMultiplierDisplay.text = "Dmg Multiplier: x" + currentDmgMultiplier;
@@ -197,12 +213,12 @@ public class PlayerStats : MonoBehaviour
 
     void Recover()
     {
-        if (CurrentHealth < characterData.MaxHealth)
+        if (CurrentHealth < currentMaxHealth)
         {
             CurrentHealth += CurrentRecovery * Time.deltaTime;
-            if(CurrentHealth > characterData.MaxHealth)
+            if(CurrentHealth > currentMaxHealth)
             {
-                CurrentHealth = characterData.MaxHealth;
+                CurrentHealth = currentMaxHealth;
             }
             UpdateHealthBar();
         }
@@ -210,7 +226,7 @@ public class PlayerStats : MonoBehaviour
 
     void UpdateHealthBar()
     {
-        healthBar.fillAmount = currentHealth / characterData.MaxHealth;
+        healthBar.fillAmount = currentHealth / currentMaxHealth;
     }
 
     void UpdateXpBar()
@@ -234,24 +250,31 @@ public class PlayerStats : MonoBehaviour
         GameManager.choosingUpgrade = false;
     }
 
-    public void SpawnStatUpgrade(GameObject statUpgrade)
+    public void StatUpgrade(string statToUpgrade, float multiplier)      
     {
-        if (statUpgradeIndex >= upgradeManager.statUpgradeSlots.Count - 1)
+        multiplier = 1 + 0.01f * multiplier;
+        if (statToUpgrade == "MaxHealth")
         {
-            Debug.LogError("statUpgrade slots full");
-            return;
+            currentMaxHealth *= multiplier;
+            UpdateHealthBar();
+            GameManager.Instance.currentHealthDisplay.text = "Health: " + (int)currentHealth + "/" + currentMaxHealth;
         }
-
-        GameObject spawnedStatUpgrade = Instantiate(statUpgrade, transform.position, Quaternion.identity);
-        spawnedStatUpgrade.transform.SetParent(transform);
-        upgradeManager.AddStatUpgrade(statUpgradeIndex, spawnedStatUpgrade.GetComponent<StatUpgrade>());
-
-        statUpgradeIndex++;
+        else if (statToUpgrade == "Recovery")
+        {
+            CurrentRecovery *= multiplier;
+        }
+        else if (statToUpgrade == "MoveSpeed")
+        {
+            CurrentMoveSpeed *= multiplier;
+        }
+        else if (statToUpgrade == "DmgMultiplier")
+        {
+            CurrentDmgMultiplier *= multiplier;
+        }
+        else
+        {
+            Debug.LogError("Invalid stat to upgrade: " + statToUpgrade);
+        }
         GameManager.choosingUpgrade = false;
-    }
-
-    public void StatUpgrade(string statToUpgrade)
-    {
-
     }
 }

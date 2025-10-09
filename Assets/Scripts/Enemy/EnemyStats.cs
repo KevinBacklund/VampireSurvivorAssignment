@@ -1,3 +1,4 @@
+using System.Collections;
 using Unity.VisualScripting;
 using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
@@ -13,6 +14,11 @@ public class EnemyStats : MonoBehaviour
     float dmgCooldown;
 
     [Header("Damage Feedback")]
+    public Color damageColor = new Color(1,0,0,1);
+    public float damageFlashDuration = 0.1f;
+    public float deathFadeTime = 0.3f;
+    Color originalColor;
+    public SpriteRenderer spriteRenderer;
     EnemyMovement movement;
 
     void Awake()
@@ -26,6 +32,29 @@ public class EnemyStats : MonoBehaviour
     private void Start()
     {
         movement = GetComponent<EnemyMovement>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        originalColor = spriteRenderer.color;
+    }
+
+
+    IEnumerator DamageFlash()
+    {
+        spriteRenderer.color = damageColor;
+        yield return new WaitForSeconds(damageFlashDuration);
+        spriteRenderer.color = originalColor;
+    }   
+
+    IEnumerator DeathFade()
+    {
+        float elapsed = 0f;
+        while (elapsed < deathFadeTime)
+        {
+            elapsed += Time.deltaTime;
+            float alpha = Mathf.Lerp(1f, 0f, elapsed / deathFadeTime);
+            spriteRenderer.color = new Color(originalColor.r, originalColor.g, originalColor.b, alpha);
+            yield return null;
+        }
+        Destroy(gameObject);
     }
 
     public void TakeDamage(float dmg, Vector2 sourcePosittion, float knockbackForce = 5f, float knockbackDuration = 0.2f)
@@ -33,7 +62,8 @@ public class EnemyStats : MonoBehaviour
         PlayerStats player = FindAnyObjectByType<PlayerStats>();
         currentHealth -= dmg * player.CurrentDmgMultiplier;
         SoundManager.PlaySfx(SfxType.enemyDamaged, 0.5f);
-        if(knockbackForce > 0)
+        StartCoroutine(DamageFlash());
+        if (knockbackForce > 0)
         {
             Vector2 direction = (Vector2)transform.position - sourcePosittion;
             movement.Knockback(direction.normalized * knockbackForce, knockbackDuration);
@@ -46,12 +76,13 @@ public class EnemyStats : MonoBehaviour
     void Kill()
     {
         PlayerStats player = FindAnyObjectByType<PlayerStats>();
+        DroprateManager drops = GetComponent<DroprateManager>();
         EnemySpawner enemySpawner = FindAnyObjectByType<EnemySpawner>();
         enemySpawner.OnEnemyKilled();
-        player.IncreaseExperience(xpDrop);
+        drops.DropItems();
         GameManager.currentScore++;
         SoundManager.PlaySfx(SfxType.enemyDeath);
-        Destroy(gameObject);
+        StartCoroutine(DeathFade());
     }
 
     private void Update()

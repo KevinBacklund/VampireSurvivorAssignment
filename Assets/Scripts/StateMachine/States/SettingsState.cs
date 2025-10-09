@@ -7,9 +7,18 @@ public class SettingsState : State
         base.EnterState();
         GameManager.Instance.settingsScreen.SetActive(true);
     }
-    public override void ExitState() 
-    { 
+    public override void UpdateState()
+    {
+        base.UpdateState();
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            GameManager.Instance.SwitchState<PausedState>();
+        }
+    }
+    public override void ExitState()
+    {
         base.ExitState();
         GameManager.Instance.settingsScreen.SetActive(false);
     }
 }
+

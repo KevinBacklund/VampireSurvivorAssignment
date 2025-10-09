@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManager : StateMachine
 {
@@ -8,7 +9,6 @@ public class GameManager : StateMachine
     public bool isGameover = false;
     public static bool choosingUpgrade = false;
     public static int currentScore;
-
     public SaveManager saveManager;
 
     [Header("UI")]
@@ -21,6 +21,12 @@ public class GameManager : StateMachine
     public TMP_Text currentMoveSpeedDisplay;
     public TMP_Text currentDmgMultiplierDisplay;
     public TMP_Text currentLevelDisplay;
+
+    private enum DisplayMode
+    {
+        windowed,
+        fullscreen
+    }
 
 
     private void Awake()
@@ -54,6 +60,35 @@ public class GameManager : StateMachine
         gameOverScreen.SetActive(false);
         levelUpScreen.SetActive(false);
         settingsScreen.SetActive(false);
+    }
+
+    public void VSync(bool vSync)
+    {
+
+        if (vSync)
+        {
+            QualitySettings.vSyncCount = 1;
+            Debug.Log("VSync Enabled");
+        }
+        else
+        {
+            QualitySettings.vSyncCount = 0;
+            Debug.Log("VSync Disabled");
+        }
+    }
+
+    public void Display(int option)
+    {
+        if(option == (int)DisplayMode.windowed)
+        {
+            Screen.fullScreenMode = FullScreenMode.Windowed;
+            Debug.Log("Windowed Mode");
+        }
+        else if(option == (int)DisplayMode.fullscreen)
+        {
+            Screen.fullScreenMode = FullScreenMode.FullScreenWindow;
+            Debug.Log("Fullscreen Mode");
+        }
     }
 
     public void ResumeGame()
