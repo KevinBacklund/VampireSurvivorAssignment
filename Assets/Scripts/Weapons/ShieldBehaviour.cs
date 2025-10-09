@@ -8,7 +8,7 @@ public class ShieldBehaviour : ProjectileWeaponBehaviour
 
     protected override void Start()
     {
-        base.Start();
+        //base.Start();
         player = FindAnyObjectByType<PlayerStats>().transform;
     }
 

@@ -27,6 +27,7 @@ public class WeaponController : MonoBehaviour
  
     protected virtual void Attack()
     {
+        SoundManager.PlaySfx(SfxType.playerAttack);
         currentCooldown = weaponData.CooldownDuration;
     }
 }

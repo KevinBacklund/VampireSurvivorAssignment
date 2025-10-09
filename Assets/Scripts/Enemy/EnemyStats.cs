@@ -1,6 +1,6 @@
 using System.Collections;
-using Unity.VisualScripting;
-using UnityEditor.ShaderGraph.Internal;
+//using Unity.VisualScripting;
+//using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
 
 public class EnemyStats : MonoBehaviour
@@ -20,6 +20,7 @@ public class EnemyStats : MonoBehaviour
     Color originalColor;
     public SpriteRenderer spriteRenderer;
     EnemyMovement movement;
+    public GameObject deathParticles;
 
     void Awake()
     {
@@ -80,6 +81,8 @@ public class EnemyStats : MonoBehaviour
         EnemySpawner enemySpawner = FindAnyObjectByType<EnemySpawner>();
         enemySpawner.OnEnemyKilled();
         drops.DropItems();
+        deathParticles = Instantiate(deathParticles,transform.position, Quaternion.identity);
+        Destroy(deathParticles,0.3f);
         GameManager.currentScore++;
         SoundManager.PlaySfx(SfxType.enemyDeath);
         StartCoroutine(DeathFade());

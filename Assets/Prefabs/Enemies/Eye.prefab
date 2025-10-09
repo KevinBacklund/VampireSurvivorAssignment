@@ -153,6 +153,11 @@ MonoBehaviour:
   currentMoveSpeed: 0
   currentDamage: 0
   xpDrop: 0
+  damageColor: {r: 1, g: 0, b: 0, a: 1}
+  damageFlashDuration: 0.1
+  deathFadeTime: 0.3
+  spriteRenderer: {fileID: 0}
+  deathParticles: {fileID: 5085541079198792568, guid: af02b4dbacb56ac4e85569ef1199aa86, type: 3}
 --- !u!58 &-5372983750754868813
 CircleCollider2D:
   m_ObjectHideFlags: 0
