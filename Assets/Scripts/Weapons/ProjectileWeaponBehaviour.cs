@@ -16,6 +16,7 @@ public class ProjectileWeaponBehaviour : MonoBehaviour
     protected int currentPierce;
     protected float currentKnockbackforce;
     protected float currentRotationOffset;
+    protected float destroyTimer;
 
     private void Awake()
     {
@@ -28,7 +29,20 @@ public class ProjectileWeaponBehaviour : MonoBehaviour
     }
     protected virtual void Start()
     {
-        Destroy(gameObject, destroyAfterSeconds);
+        //Destroy(gameObject, destroyAfterSeconds);
+    }
+
+    protected virtual void Update()
+    {
+        if (!GameManager.gamePaused)
+        {
+            destroyTimer += Time.deltaTime;
+            if (destroyTimer >= destroyAfterSeconds)
+            {
+                Destroy(gameObject);
+                destroyTimer = 0;
+            }
+        }
     }
 
     public void DirectionChecker(Vector3 dir)

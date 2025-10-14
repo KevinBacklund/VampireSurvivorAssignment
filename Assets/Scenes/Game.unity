@@ -2350,7 +2350,7 @@ MonoBehaviour:
   - startLevel: 1
     endLevel: 3
     experienceCapIncrease: 150
-  - startLevel: 1
+  - startLevel: 3
     endLevel: 6
     experienceCapIncrease: 300
   weaponIndex: 0
@@ -5874,6 +5874,10 @@ MonoBehaviour:
       enemyCount: 25
       spawnCount: 0
       enemyPrefab: {fileID: 478225569466743834, guid: 07e86eed956d9804a8c6d838a8e08bed, type: 3}
+    - enemyName: Eye
+      enemyCount: 6
+      spawnCount: 0
+      enemyPrefab: {fileID: 1433775975767351823, guid: 5aeecc4c43420e446953e9a6426c55bd, type: 3}
     waveQuota: 0
     spawnInterval: 14
     spawnCount: 0
@@ -7484,10 +7488,10 @@ MonoBehaviour:
   m_MultiSelect: 0
   m_Options:
     m_Options:
-    - m_Text: Windowed
+    - m_Text: Fullscreen
       m_Image: {fileID: 0}
       m_Color: {r: 1, g: 1, b: 1, a: 1}
-    - m_Text: Fullscreen
+    - m_Text: Windowed
       m_Image: {fileID: 0}
       m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_OnValueChanged:
@@ -8181,7 +8185,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Windowed
+  m_text: Fullscreen
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}

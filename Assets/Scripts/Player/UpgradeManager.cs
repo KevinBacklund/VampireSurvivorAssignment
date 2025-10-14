@@ -53,12 +53,6 @@ public class UpgradeManager : MonoBehaviour
         weaponLevels[slotIndex] = weapon.weaponData.Level;
     }
 
-    public void AddStatUpgrade(int slotIndex, StatUpgrade statUpgrade)
-    {
-        statUpgradeSlots[slotIndex] = statUpgrade;
-        statUpgradeLevels[slotIndex] = statUpgrade.statUpgradeData.Level;
-    }
-
     public void LevelUpWeapon(int slotIndex, int upgradeIndex)
     {
         if(weaponSlots.Count > slotIndex)
@@ -85,10 +79,7 @@ public class UpgradeManager : MonoBehaviour
 
         foreach (var upgradeOption in upgradeUIOptions)
         {
-            if(availableWeaponUpgrades.Count == 0 && availableStatUpgrade.Count == 0)
-            {
-                return;
-            }
+            
 
             int upgradeType;
 

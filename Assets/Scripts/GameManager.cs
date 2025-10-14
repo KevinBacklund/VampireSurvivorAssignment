@@ -24,8 +24,8 @@ public class GameManager : StateMachine
 
     private enum DisplayMode
     {
+        fullscreen,
         windowed,
-        fullscreen
     }
 
 
@@ -34,12 +34,7 @@ public class GameManager : StateMachine
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject);
             DisableScreens();
-        }
-        else
-        {
-            Destroy(gameObject);
         }
     }
 

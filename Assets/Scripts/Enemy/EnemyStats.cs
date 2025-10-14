@@ -1,6 +1,4 @@
 using System.Collections;
-//using Unity.VisualScripting;
-//using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
 
 public class EnemyStats : MonoBehaviour
@@ -12,6 +10,7 @@ public class EnemyStats : MonoBehaviour
     public float currentDamage;
     public int xpDrop;
     float dmgCooldown;
+    Animator animator;
 
     [Header("Damage Feedback")]
     public Color damageColor = new Color(1,0,0,1);
@@ -29,9 +28,10 @@ public class EnemyStats : MonoBehaviour
         currentDamage = enemyData.Damage;
         xpDrop = enemyData.XpDrop;
     }
-
+    
     private void Start()
     {
+        animator = GetComponent<Animator>();
         movement = GetComponent<EnemyMovement>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         originalColor = spriteRenderer.color;
@@ -90,9 +90,23 @@ public class EnemyStats : MonoBehaviour
 
     private void Update()
     {
-        if (dmgCooldown > 0)
+        if (!GameManager.gamePaused)
         {
-            dmgCooldown -= Time.deltaTime;
+            if (animator != null)
+            {
+                animator.enabled = true;
+            }
+            if (dmgCooldown > 0)
+            {
+                dmgCooldown -= Time.deltaTime;
+            }
+        }
+        else
+        {
+            if (animator != null)
+            {
+                animator.enabled = false;
+            }
         }
     }
 

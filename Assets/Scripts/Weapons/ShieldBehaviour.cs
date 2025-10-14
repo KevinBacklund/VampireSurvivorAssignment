@@ -12,9 +12,10 @@ public class ShieldBehaviour : ProjectileWeaponBehaviour
         player = FindAnyObjectByType<PlayerStats>().transform;
     }
 
-    private void Update()
+    protected override void Update()
     {
-       if (!GameManager.gamePaused)
+        base.Update();
+        if (!GameManager.gamePaused)
         {
             angle += Time.deltaTime * currentSpeed;
             Vector3 direction = Quaternion.AngleAxis(angle, Vector3.forward) * Vector3.up;

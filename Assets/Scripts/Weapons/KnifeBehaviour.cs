@@ -7,8 +7,9 @@ public class KnifeBehaviour : ProjectileWeaponBehaviour
         base.Start();
     }
 
-    void Update()
+    protected override void Update()
     {
+        base.Update();
         if (!GameManager.gamePaused)
         {
             transform.position += direction * currentSpeed * Time.deltaTime;

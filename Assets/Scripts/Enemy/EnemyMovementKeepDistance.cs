@@ -12,20 +12,23 @@ public class EnemyMovementKeepDistance : EnemyMovement
 
     protected override void Update()
     {
-        CalculateDistanceToPlayer();
+        if (!GameManager.gamePaused)
+        {
+            CalculateDistanceToPlayer();
 
-        if (knockbackDuration > 0)
-        {
-            transform.position += (Vector3)knockbackVelocity * Time.deltaTime;
-            knockbackDuration -= Time.deltaTime;
-        }
-        else if (distanceToPlayer > distanceToKeep)
-        {
-            transform.position = Vector2.MoveTowards(transform.position, player.transform.position, enemy.currentMoveSpeed * Time.deltaTime);
-        }
-        else if (distanceToPlayer < distanceToKeep + 0.1)
-        {
-            transform.position = Vector2.MoveTowards(transform.position, player.transform.position, -enemy.currentMoveSpeed * Time.deltaTime);
+            if (knockbackDuration > 0)
+            {
+                transform.position += (Vector3)knockbackVelocity * Time.deltaTime;
+                knockbackDuration -= Time.deltaTime;
+            }
+            else if (distanceToPlayer > distanceToKeep)
+            {
+                transform.position = Vector2.MoveTowards(transform.position, player.transform.position, enemy.currentMoveSpeed * Time.deltaTime);
+            }
+            else if (distanceToPlayer < distanceToKeep + 0.1)
+            {
+                transform.position = Vector2.MoveTowards(transform.position, player.transform.position, -enemy.currentMoveSpeed * Time.deltaTime);
+            }
         }
     }
 
